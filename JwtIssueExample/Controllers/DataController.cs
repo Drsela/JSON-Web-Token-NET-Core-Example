@@ -22,9 +22,7 @@ namespace JwtIssueExample.Controllers
             try
             {
                 var role = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
-                var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-
-                var text = $"Hello from DataController. This endpoint doesn't require and token. Your role is {role ?? "not set"}.";
+                var text = $"Hello from DataController. This endpoint doesn't require a token. Your role is {role ?? "not set"}.";
                 return Ok(text);
             }
             catch (Exception)
@@ -58,7 +56,8 @@ namespace JwtIssueExample.Controllers
             try
             {
                 var role = User.Claims.First(x => x.Type == ClaimTypes.Role).Value;
-                var text = $"Hello from DataController. Only users above admin can access this endpoint. Your role is {role}.";
+                var userId = User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
+                var text = $"Hello from DataController. Only users above admin can access this endpoint. Your role is {role} with id {userId}.";
                 return Ok(text);
             }
             catch (Exception)
